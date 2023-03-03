@@ -9,8 +9,8 @@ export async function postNewUrl(req, res) {
     try {
         
         const result = await connection.query(
-            `INSERT INTO links (user_id, url, short_url, visitors) VALUES ($1, $2, $3, $4);`,
-            [res.locals.user.id, url, shortenedUrl, 0]);
+            `INSERT INTO links (user_id, url, short_url, visitors, "createdAt") VALUES ($1, $2, $3, $4, $5);`,
+            [res.locals.user.id, url, shortenedUrl, 0, new Date()]);
 
         const shortUrl = await connection.query(
             `SELECT id, short_url as "shortUrl" FROM links WHERE short_url = $1;`,

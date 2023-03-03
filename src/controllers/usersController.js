@@ -16,7 +16,7 @@ export async function postSignUpUser(req, res) {
         if (emailAlreadyExists.rowCount !== 0) return res.sendStatus(409);
         
         const result = await connection.query(
-            `INSERT INTO users (name, email, password, created_at) VALUES ($1, $2, $3, $4);`,
+            `INSERT INTO users (name, email, password, "createdAt") VALUES ($1, $2, $3, $4);`,
             [data.name, data.email, data.password, new Date()]);
         
         res.sendStatus(201);
@@ -40,7 +40,7 @@ export async function postSignInUser(req, res) {
         const token = nanoid();
 
         await connection.query(
-            `INSERT INTO sessions (user_id, token, created_at) VALUES ($1, $2, $3)`,
+            `INSERT INTO sessions (user_id, token, "createdAt") VALUES ($1, $2, $3)`,
             [user.rows[0].id, token, new Date()]);
         
         res.send({token});
