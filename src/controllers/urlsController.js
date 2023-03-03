@@ -52,6 +52,26 @@ export async function deleteShortUrl(req, res) {
         res.sendStatus(204);
     } catch (error) {
         console.log(chalk.white.bgRed("ERRO URLS:") + error);
+        res.sendStatus(404);
+    }
+}
+
+export async function openUrl(req, res) {
+    try {
+        const shortUrl = req.params.shortUrl;
+
+        const urlData = await connection.query(
+            `SELECT * FROM links WHERE short_url = $1`,
+            [shortUrl]);
+        if (urlData.rowCount === 0) return res.sendStatus(404);
+
+        const result = await connection.query(
+            `UPDATE links SET visitors = $2 WHERE id = $1;`,
+            [urlData.rows[0].id, (urlData.rows[0].visitors + 1)]);
+        
+        res.redirect(urlData.rows[0].url);
+    } catch (error) {
+        console.log(chalk.white.bgRed("ERRO URLS:") + error);
         res.sendStatus(500);
     }
 }
