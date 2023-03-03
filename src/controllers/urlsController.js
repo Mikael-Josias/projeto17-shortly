@@ -22,3 +22,17 @@ export async function postNewUrl(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function getUrlById(req, res) {
+    const id = req.params.id;
+
+    try {
+        const result = await connection.query(
+            `SELECT id, short_url as "shortUrl", url FROM links WHERE id = $1;`,
+            [id]);
+        result.rowCount === 0 ? res.sendStatus(404) : res.send(result.rows[0]);
+    } catch (error) {
+        console.log(chalk.white.bgRed("ERRO URLS:") + error);
+        res.sendStatus(500);
+    }
+}
