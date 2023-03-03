@@ -49,3 +49,22 @@ export async function postSignInUser(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function getUserInfo(req, res) {
+    try {
+        const userData = await connection.query(
+            `SELECT id, name, (SELECT SUM(visitors) as v FROM links WHERE user_id = $1) as "visitCount" FROM users WHERE id = $1`,
+            [res.locals.user.id]);
+        
+        const userLinks = await connection.query(
+            `SELECT id, short_url as "shortUrl", url, visitors as "visitCount" FROM links WHERE user_id = $1`,
+            [res.locals.user.id]);
+        
+        userData.rows[0].shortenedUrls = userLinks.rows;
+
+        res.send(userData.rows[0]);
+    } catch (error) {
+        console.log(chalk.white.bgRed("ERRO USERS:") + error);
+        res.sendStatus(500);
+    }
+}
