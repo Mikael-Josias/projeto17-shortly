@@ -8,6 +8,7 @@ import connection from "../database/database.connection.js";
 export async function postSignUpUser(req, res) {
     try {
         const data = req.body;
+        data.password = await bcrypt.hash(data.password, 10);
 
         const emailAlreadyExists = await connection.query(
             `SELECT id FROM users WHERE email = $1;`,
