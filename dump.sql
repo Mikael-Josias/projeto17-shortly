@@ -28,7 +28,7 @@ CREATE TABLE public.links (
     id integer NOT NULL,
     user_id integer NOT NULL,
     url text NOT NULL,
-    short_url character varying(20) NOT NULL,
+    short_url character varying(25) NOT NULL,
     visitors integer NOT NULL
 );
 
@@ -169,25 +169,29 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: links; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.links VALUES (1, 1, '{"url":"https://d3ugyf2ht6aenh.cloudfront.net/stores/001/204/289/products/bicarbonato-de-sodio1-6ec32885ba5c40682615955998518823-640-0.jpg"}', 'i_qoxwsjCFfYcypzlvXSI', 0);
+INSERT INTO public.links VALUES (2, 1, 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/204/289/products/bicarbonato-de-sodio1-6ec32885ba5c40682615955998518823-640-0.jpg', '7rgzV_hI2ulcu1so8pqoz', 0);
 
 
 --
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (1, 'nGzZjeu6pJTINcZUaj4jb', '2023-03-03 11:03:28.974');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Mikael Josias Rodrigues', 'josias@gmail.com', '$2b$10$8HbLZHz785hfUfdFxllPYOjLo2HwSdzZ4A3NdPtHygQn7RREt2MF6', '2023-03-03 11:03:15.628');
 
 
 --
 -- Name: links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.links_id_seq', 1, false);
+SELECT pg_catalog.setval('public.links_id_seq', 2, true);
 
 
 --
@@ -208,7 +212,7 @@ SELECT pg_catalog.setval('public.sessions_user_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
