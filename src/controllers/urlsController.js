@@ -36,3 +36,22 @@ export async function getUrlById(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function deleteShortUrl(req, res) {
+    try {
+        const urlId = req.params.id;
+
+        const urlData = await connection.query(
+            `SELECT user_id FROM links WHERE id = $1`,
+            [urlId]);
+        if (urlData.rows[0].user_id !== res.locals.user.id) return res.sendStatus(401);
+
+        const result = await connection.query(
+            `DELETE FROM links WHERE id = $1`,
+            [urlId]);
+        res.sendStatus(204);
+    } catch (error) {
+        console.log(chalk.white.bgRed("ERRO URLS:") + error);
+        res.sendStatus(500);
+    }
+}
