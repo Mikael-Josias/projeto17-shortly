@@ -3,8 +3,7 @@ import connection from "../database/database.connection.js";
 
 export async function validateUserToken(req, res, next) {
     try {
-        const { authorization } = req.headers;
-        authorization.replace("Bearer ", "");
+        const authorization = req.headers.authorization?.replace(/(Bearer )/g, "");
 
         const result = await connection.query(
             `SELECT user_id FROM sessions WHERE token = $1`,
