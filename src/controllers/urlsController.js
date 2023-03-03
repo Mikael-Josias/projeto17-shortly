@@ -90,7 +90,7 @@ export async function getRankings(req, res) {
             LIMIT 10`,
             []);
 
-        res.send(rankings.rows[0]);
+        res.send(rankings.rows);
     } catch (error) {
         console.log(chalk.white.bgRed("ERRO URLS:") + error);
         res.sendStatus(500);
