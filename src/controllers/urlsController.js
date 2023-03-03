@@ -75,3 +75,24 @@ export async function openUrl(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function getRankings(req, res) {
+    try {
+        const rankings = await connection.query(
+            `SELECT users.id, users.name,
+                count(links.id) AS "linksCount",
+                COALESCE(sum(links.visitors), 0) AS "visitCount"
+            FROM users
+            LEFT JOIN links
+            ON links.user_id = users.id
+            GROUP BY users.id
+            ORDER BY "visitCount" DESC
+            LIMIT 10`,
+            []);
+
+        res.send(rankings.rows[0]);
+    } catch (error) {
+        console.log(chalk.white.bgRed("ERRO URLS:") + error);
+        res.sendStatus(500);
+    }
+}
