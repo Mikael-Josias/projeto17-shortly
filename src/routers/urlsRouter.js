@@ -6,5 +6,6 @@ import { validateUserToken } from "../middlewares/validateUserToken.js";
 const urlsRouter = Router();
 
 urlsRouter.post("/urls/shorten", validateUserToken, validateShortenUrls, postNewUrl);
+urlsRouter.post("/urls/:id", );
 
 export default urlsRouter;
